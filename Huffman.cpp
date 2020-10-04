@@ -110,7 +110,7 @@ void printArr(int arr[], int n)
         cout<< arr[i]; 
     cout<<"\n"; 
 } 
-void Codes(struct node *root, int ar[], int top)  
+void Codes(struct node *root, int ar[], int top)  //To print the codes
 {
     if (root->left) { 
   
