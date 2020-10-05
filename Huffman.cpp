@@ -1,7 +1,6 @@
 #include<iostream>
 #include<string>
 #include<unordered_map>
-#include<sstream>
 #include<fstream>
 #include<iomanip>
 using namespace std;
@@ -114,17 +113,17 @@ void printArr(int arr[], int n) //Printing the conents of an array
   
     cout<<"\n"; 
 } 
-void printCodes(struct node *root, int arr[], int top)  //Traverses Huffman Tree to retrieve the codes and 
+void Codes(struct node *root, int arr[], int top)  //Traverses the Huffman Tree to retrieve the codes and 
 {                                                       //stores them in the unordered map umap
     if (root->left) { 
   
         arr[top] = 0; 
-        printCodes(root->left, arr, top + 1); 
+        Codes(root->left, arr, top + 1); 
     } 
     if (root->right) { 
   
         arr[top] = 1; 
-        printCodes(root->right, arr, top + 1); 
+        Codes(root->right, arr, top + 1); 
     } 
 
     if (root->left==NULL && root->right == NULL) { 
@@ -200,9 +199,7 @@ void print_inorder(struct node *root) //Inorder traversal of a tree
 }
 int main()
 {
-    
     struct node *root[10000];
-    
     //File Reading for Encoding
     fstream infile;
     unordered_map<char,int>store; //To store the characters and their respective frequencies
@@ -214,14 +211,14 @@ int main()
         store[chg]=store[chg]+1;
     }
     int j=0;
-    //Builds the array of structure variable swith the characters and the frequencies
+    //Builds the array of structure variables with the characters and the frequencies
     for(auto i=store.begin();i!=store.end();i++) 
     {
         root[j]=buildNode(i->second,i->first);
         j++;
     }
     n=j; //sets size to j
-    //Prints each character with ts frequency
+    //Prints each character with its frequency
     for(int i=0;i<n;i++)
     {
         cout<<"Char = "<<root[i]->a<<" Freq = "<<root[i]->freq<<endl;
@@ -236,10 +233,10 @@ int main()
     cout<<"Level order traversal : "<<endl;
     traverse_level(root[0]);
     cout<<endl<<"Codes : "<<endl;
-    printCodes(root[0],arr,0);//Prints the codes and stres them into the umap
+    Codes(root[0],arr,0);//Prints the codes and stores them into the umap
     cout<<endl;
 
-    //File Readig for decoding
+    //File Reading for decoding
     fstream infile1;
     infile1.open("bits.txt",ios::in); //bits.txt has the codes in any random order
     fstream outfile;
@@ -253,7 +250,7 @@ int main()
         for(auto i=umap.begin();i!=umap.end();i++)
         {
             if(i->second == str) //If the string matches any code in the map, then it prints the corresponding
-            {                    //character to the decoded.txt
+            {                    //character to decoded.txt
                 outfile<<i->first;
                 str="";
                 break;
